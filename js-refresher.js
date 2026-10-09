@@ -77,3 +77,9 @@ const updatedEmir = updatedStudents.find((student) => student.id === 2);
 
 console.log(`Original: Emir is in year ${originalEmir.year}`);
 console.log(`Updated: Emir is in year ${updatedEmir.year}`);
+
+// Task 10: GitHub usernames
+students.forEach((student) => {
+  const github = student.contact?.github ?? "no GitHub";
+  console.log(`${student.name}: ${github}`);
+});
