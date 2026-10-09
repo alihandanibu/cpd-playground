@@ -83,3 +83,24 @@ students.forEach((student) => {
   const github = student.contact?.github ?? "no GitHub";
   console.log(`${student.name}: ${github}`);
 });
+
+// Task 11: Load a user from an API
+async function loadUser(id) {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/users/${id}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const user = await response.json();
+
+    console.log(`User ${id}: ${user.name}`);
+  } catch {
+    console.log(`Could not load user ${id}`);
+  }
+}
+
+loadUser(1);
