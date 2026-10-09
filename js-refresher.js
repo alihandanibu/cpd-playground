@@ -42,3 +42,10 @@ students.forEach((student) => {
 const names = students.map((student) => student.name);
 
 console.log(names);
+
+// Task 7: Third-year students
+const thirdYearNames = students
+  .filter((student) => student.year === 3)
+  .map((student) => student.name);
+
+console.log(thirdYearNames);
