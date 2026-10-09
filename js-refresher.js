@@ -49,3 +49,18 @@ const thirdYearNames = students
   .map((student) => student.name);
 
 console.log(thirdYearNames);
+
+// Task 8: Average grades
+const average = (grades) => {
+  const sum = grades.reduce((total, grade) => total + grade, 0);
+  return sum / grades.length;
+};
+
+const studentsWithAverage = students.map((student) => ({
+  ...student,
+  average: average(student.grades),
+}));
+
+studentsWithAverage.forEach((student) => {
+  console.log(`${student.name}: ${student.average.toFixed(2)}`);
+});
