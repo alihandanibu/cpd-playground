@@ -64,3 +64,16 @@ const studentsWithAverage = students.map((student) => ({
 studentsWithAverage.forEach((student) => {
   console.log(`${student.name}: ${student.average.toFixed(2)}`);
 });
+
+// Task 9: Promote Emir without changing the original
+const updatedStudents = students.map((student) =>
+  student.id === 2
+    ? { ...student, year: 3 }
+    : student
+);
+
+const originalEmir = students.find((student) => student.id === 2);
+const updatedEmir = updatedStudents.find((student) => student.id === 2);
+
+console.log(`Original: Emir is in year ${originalEmir.year}`);
+console.log(`Updated: Emir is in year ${updatedEmir.year}`);
