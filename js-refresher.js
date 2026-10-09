@@ -38,3 +38,7 @@ const greet = (student) =>
 students.forEach((student) => {
   console.log(greet(student));
 });
+// Task 6: List of names
+const names = students.map((student) => student.name);
+
+console.log(names);
