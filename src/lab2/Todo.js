@@ -3,13 +3,16 @@ import { Pressable, Text, TextInput, View } from 'react-native';
 import { styles } from './styles';
 
 export default function Todo() {
+  // Pamti ono što korisnik trenutno piše.
   const [text, setText] = useState('');
 
+  // Pamti listu zadataka.
   const [todos, setTodos] = useState([
     { id: '1', title: 'Install Expo Go', done: true },
     { id: '2', title: 'Finish Lab 2', done: false },
   ]);
 
+  // Dodaje novi zadatak.
   function addTodo() {
     const title = text.trim();
 
@@ -19,7 +22,7 @@ export default function Todo() {
 
     const newTodo = {
       id: Date.now().toString(),
-      title,
+      title: title,
       done: false,
     };
 
@@ -27,15 +30,30 @@ export default function Todo() {
     setText('');
   }
 
+  // Briše zadatak s primljenim ID-em.
   function removeTodo(id) {
     setTodos((previous) =>
       previous.filter((todo) => todo.id !== id)
     );
   }
 
+  // Prebacuje zadatak između završenog i nezavršenog.
+  function toggleTodo(id) {
+    setTodos((previous) =>
+      previous.map((todo) =>
+        todo.id === id
+          ? { ...todo, done: !todo.done }
+          : todo
+      )
+    );
+  }
+
+  // Broji samo nezavršene zadatke.
+  const remaining = todos.filter((todo) => !todo.done).length;
+
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>{todos.length} tasks</Text>
+      <Text style={styles.title}>{remaining} left</Text>
 
       <TextInput
         value={text}
@@ -51,11 +69,21 @@ export default function Todo() {
       {todos.length === 0 && <Text>No tasks yet</Text>}
 
       {todos.map((todo) => (
-        <View
-          key={todo.id}
-          style={[styles.card, styles.row]}
-        >
-          <Text style={{ flex: 1 }}>{todo.title}</Text>
+        <View key={todo.id} style={[styles.card, styles.row]}>
+          <Pressable
+            onPress={() => toggleTodo(todo.id)}
+            style={{ flex: 1 }}
+          >
+            <Text
+              style={{
+                textDecorationLine: todo.done
+                  ? 'line-through'
+                  : 'none',
+              }}
+            >
+              {todo.title}
+            </Text>
+          </Pressable>
 
           <Pressable
             onPress={() => removeTodo(todo.id)}
