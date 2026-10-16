@@ -29,6 +29,7 @@ function getDevMenuHint() {
 }
 
 export default function HomeScreen() {
+  console.log("Screen rendered.");
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
