@@ -4,7 +4,8 @@ import { styles } from './styles';
 
 export default function Todo() {
   // Pamti ono što korisnik trenutno piše.
-  const [text, setText] = useState('');
+  const [text, setText] = useState(''); 
+  const [filter, setFilter] = useState('all');
 
   // Pamti listu zadataka.
   const [todos, setTodos] = useState([
@@ -51,6 +52,12 @@ export default function Todo() {
   // Broji samo nezavršene zadatke.
   const remaining = todos.filter((todo) => !todo.done).length;
 
+  const visibleTodos = todos.filter((todo) => {
+  if (filter === 'active') return !todo.done;
+  if (filter === 'done') return todo.done;
+  return true;
+});
+
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>{remaining} left</Text>
@@ -66,9 +73,26 @@ export default function Todo() {
         <Text style={styles.buttonText}>Add</Text>
       </Pressable>
 
+      <View style={styles.row}>
+        {['all', 'active', 'done'].map((value) => (
+          <Pressable
+            key={value}
+            onPress={() => setFilter(value)}
+            style={[
+              styles.button,
+              filter === value && { backgroundColor: '#237A45' },
+        ]}
+    >
+      <Text style={styles.buttonText}>
+        {value === 'all' ? 'All' : value === 'active' ? 'Active' : 'Done'}
+      </Text>
+    </Pressable>
+  ))}
+</View>
+
       {todos.length === 0 && <Text>No tasks yet</Text>}
 
-      {todos.map((todo) => (
+      {visibleTodos.map((todo) => (
         <View key={todo.id} style={[styles.card, styles.row]}>
           <Pressable
             onPress={() => toggleTodo(todo.id)}
